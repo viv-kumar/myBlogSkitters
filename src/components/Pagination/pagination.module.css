@@ -1,0 +1,15 @@
+.pagination{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: end;
+    list-style: none;
+    gap: 2px;
+    padding-right: 15px;
+   
+}
+.pagination a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}

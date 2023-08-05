@@ -1,95 +1,68 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+"use client";
+import BlogCard from "@/components/blogCard/BlogCard";
+import { blogs } from "@/lib/data";
+import Image from "next/image";
+import classes from "./page.module.css";
+import Pagination from "@/components/Pagination/Pagination";
+import { paginate } from "@/lib/paginate";
+
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [posts, setPosts] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const pageSize = 3;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const getBlogs = async () => {
+      const res = await fetch("http://localhost:3000/api/blog");
+      console.log(res);
+      const data = await res.json();
+      console.log(data);
+      setPosts(data);
+    };
+    getBlogs();
+  }, []);
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const handleSearch =  () => {
+    const filteredResult=posts.filter((item)=>item.title.toLowerCase().includes(keyword.toLowerCase()));
+    setPosts(filteredResult)
+  };
+
+  const paginatePosts = paginate(posts, currentPage, pageSize);
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <div className={classes.container}>
+      {blogs?.length > 0 && <h2>My Blogs</h2>}
+      <Pagination
+        items={posts.length}
+        pageSize={pageSize}
+        currentPage={currentPage}
+        onPageChange={handlePageChange}
+      />
+      <div style={{padding:"10px"}}>
+        <input
+          type="text"
+          placeholder="search blog title"
+          value={keyword}
+          onChange={(e) => {
+            setKeyword(e.target.value);
+          }}
+          style={{padding:"3px"}}
         />
+        <button onClick={handleSearch} style={{padding:"5px",background:"blue",border:"none",color:"white"}}>Search</button>
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className={classes.wrapper}>
+        {paginatePosts?.length > 0 ? (
+          paginatePosts.map((blog) => <BlogCard key={blog._id} blog={blog} />)
+        ) : (
+          <h3 className={classes.noBlogs}>...loading</h3>
+        )}
       </div>
-    </main>
-  )
+    </div>
+  );
 }
