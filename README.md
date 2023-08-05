@@ -1,5 +1,5 @@
-1. Set upeds a new Next.js project using the latest version:
-
+1. Set upeds a new Next.js project using the latest versions
+NOTE:-If client side exception occurs, please refresh the page.
 Use the create-next-app command or your preferred method to set up a new Next.js project. 2. Created a home page that displays a list of blog posts:
 
 Created a new component for the home page.
