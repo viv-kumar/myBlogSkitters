@@ -54,7 +54,7 @@ export default function Home() {
           }}
           style={{padding:"3px"}}
         />
-        <button onClick={handleSearch} style={{padding:"5px",background:"blue",border:"none",color:"white"}}>Search</button>
+        <button onClick={handleSearch} style={{padding:"5px",background:"blue",border:"none",color:"white",borderBottomRightRadius:"3px"}}>Search</button>
       </div>
       <div className={classes.wrapper}>
         {paginatePosts?.length > 0 ? (
