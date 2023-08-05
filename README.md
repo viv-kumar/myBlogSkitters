@@ -1,3 +1,31 @@
+1. Set upeds a new Next.js project using the latest version:
+
+Use the create-next-app command or your preferred method to set up a new Next.js project. 2. Created a home page that displays a list of blog posts:
+
+Created a new component for the home page.
+Fetch a list of blog posts from your data source (e.g., MongoDB) using server-side rendering (SSR).
+Display the title, publication date, and summary for each post. 3. Implemented dynamic routing for individual blog posts:
+
+Created a dynamic route for individual blog posts using Next.js's file-based routing.
+Fetch the content for the specific blog post using SSR.
+Display the content on the dedicated blog post page. 4. Created a form to allow users to create new blog posts:
+
+Created a component for the blog post creation form.
+Implemented form fields for the title, content, and optional image upload using Cloudinary.
+Handle form submission to send the new blog post data to your backend (MongoDB).
+2.6. Add pagination functionality to the home page:
+
+3.Implemented pagination logic to display a limited number of blog posts per page.
+Include navigation links to move between pages.
+ Implement a comment system for each blog post:
+
+Created a component for displaying and adding comments.
+Fetch and display existing comments for each blog post using SSR.
+Allow users to add new comments and submit them to your backend (MongoDB).
+ Ensure the application is responsive and mobile-friendly:
+
+Used CSS modules to style your components and ensure they adapt to different screen sizes.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
